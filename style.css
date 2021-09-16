@@ -12,19 +12,34 @@ a {
   text-decoration: none;
   color: black;
 }
+ul {
+  list-style: none;
+}
 .container {
-  width: 100%;
+  height: calc(100vh - 40px);
+  width: 300px;
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+  transform: translateX(0);
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  max-width: 100%;
+}
+.inner-container {
+  display: flex;
+  transform: translateX(0);
+  transition: transform 0.25s;
 }
 .slider-item {
   width: 300px;
+  height: fit-content;
   border-radius: 10px;
   overflow: hidden;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -45%);
   cursor: pointer;
   box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+  margin: 20px 20px 0 20px;
 }
 .img-container {
   height: 450px;
@@ -70,4 +85,46 @@ a {
 }
 .slider-item:hover .overlay {
   visibility: visible;
+  animation: fade 0.5s;
+}
+.slider-item:active .more-info {
+  animation: popIcon 0.2s ease-out;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes popIcon {
+  0% {
+    color: rgba(129, 129, 129, 0.1);
+  }
+  100% {
+    color: rgba(56, 54, 54, 0.1);
+    transform: scale(1.9);
+  }
+}
+.arrow {
+  position: absolute;
+  top: 200px;
+  cursor: pointer;
+  font-size: 50px;
+  z-index: 5;
+  font-weight: bolder;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.arrow:hover {
+  color: rgb(76, 161, 161);
+  opacity: 1;
+}
+.next {
+  right: 0;
+}
+
+.prev {
 }
