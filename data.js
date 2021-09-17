@@ -1,4 +1,4 @@
-var productDataWomens = [
+export var productDataWomens = [
   {
     productUrl:
       "https://www.newlook.com/uk/womens/clothing/coats-jackets/dark-grey-faux-fur-longline-coat/p/619712403",
@@ -140,5 +140,3 @@ var productDataWomens = [
     price: "35.99",
   },
 ];
-
-export default productDataWomens;

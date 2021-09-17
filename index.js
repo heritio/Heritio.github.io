@@ -1,26 +1,44 @@
-import productDataWomens from "./data";
+import { productDataWomens } from "./data.js";
+let ourData = productDataWomens;
 
-const innerCarousel = document.querySelector(".inner-container");
-const carouselArrows = document.querySelectorAll(".arrow");
-const numberOfItems = document.querySelectorAll(
-  ".inner-container .slider-item"
-).length;
-let itemIndex = 1;
-let translateX = 0;
+let slidePosition = 0;
+const slides = document.querySelectorAll(".slider-item");
+const totalSlides = slides.length;
 
-carouselArrows.forEach((arrow) => {
-  arrow.addEventListener("click", (event) => {
-    if (event.target.id === "prev") {
-      if (itemIndex !== 1) {
-        itemIndex--;
-        translateX += 300;
-      }
-    } else {
-      if (itemIndex !== numberOfItems) {
-        itemIndex++;
-        translateX += 300;
-      }
-    }
-    innerCarousel.style.transform = `translateX(${translateX}px)`;
-  });
+document.getElementById("next").addEventListener("click", function () {
+  moveToNextSlide();
 });
+document.getElementById("prev").addEventListener("click", function () {
+  moveToPrevSlide();
+});
+
+function updateSlidePosition() {
+  for (let slide of slides) {
+    slide.classList.remove("active");
+    slide.classList.add("hidden");
+  }
+
+  slides[slidePosition].classList.add("active");
+}
+
+function moveToNextSlide() {
+  if (slidePosition === totalSlides - 1) {
+    slidePosition = 0;
+  } else {
+    slidePosition++;
+  }
+
+  updateSlidePosition();
+}
+
+function moveToPrevSlide() {
+  if (slidePosition === 0) {
+    slidePosition = totalSlides - 1;
+  } else {
+    slidePosition--;
+  }
+
+  updateSlidePosition();
+}
+
+function generateItems() {}
