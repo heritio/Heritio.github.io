@@ -1,44 +1,27 @@
-import { productDataWomens } from "./data.js";
-let ourData = productDataWomens;
+//innercontainer and items
+let innerCarousel = document.querySelector(".inner-container");
+let carouselItems = document.querySelectorAll(".inner-container .slider-item");
+//btn
+let prevBtn = document.querySelector("#prev");
+let nextBtn = document.querySelector("#next");
+//position index of image (at start) but changes
+let imgIndex = 1;
+let size = carouselItems[0].clientWidth;
 
-let slidePosition = 0;
-const slides = document.querySelectorAll(".slider-item");
-const totalSlides = slides.length;
+innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
 
-document.getElementById("next").addEventListener("click", function () {
-  moveToNextSlide();
+nextBtn.addEventListener("click", () => {
+  innerCarousel.style.transition = "transform 0.4s ease";
+  imgIndex++;
+  innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
 });
-document.getElementById("prev").addEventListener("click", function () {
-  moveToPrevSlide();
+
+prevBtn.addEventListener("click", () => {
+  innerCarousel.style.transition = "transform 0.4s ease";
+  imgIndex--;
+  innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
 });
 
-function updateSlidePosition() {
-  for (let slide of slides) {
-    slide.classList.remove("active");
-    slide.classList.add("hidden");
-  }
-
-  slides[slidePosition].classList.add("active");
-}
-
-function moveToNextSlide() {
-  if (slidePosition === totalSlides - 1) {
-    slidePosition = 0;
-  } else {
-    slidePosition++;
-  }
-
-  updateSlidePosition();
-}
-
-function moveToPrevSlide() {
-  if (slidePosition === 0) {
-    slidePosition = totalSlides - 1;
-  } else {
-    slidePosition--;
-  }
-
-  updateSlidePosition();
-}
-
-function generateItems() {}
+innerCarousel.addEventListener("transitionend", () => {
+  console.log("Transition");
+});
