@@ -16,10 +16,9 @@ a {
 .container {
   margin: 20px auto;
   position: relative;
-  width: 250px;
+  width: 750px;
   max-width: 100%;
-
-  border: 5px solid black;
+  overflow: hidden;
 }
 .inner-container {
   width: fit-content;
