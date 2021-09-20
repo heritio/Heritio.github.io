@@ -16,6 +16,21 @@
   <body>
     <!--HEADING-->
     <h1 class="page-header">New Season calling...</h1>
+    <div class="filter-menu">
+      <input class="input-bar" type="text" placeholder="search" id="search" />
+      <input class="input-bar" type="text" placeholder="min-price" id="min" />
+      <input class="input-bar" type="text" placeholder="max-price" id="max" />
+
+      <select name="" id="type-search">
+        <option value="/">All</option>
+        <option value="/coats-jackets/">Coats & Jackets</option>
+        <option value="/tops/">Tops</option>
+        <option value="/leggings/">Leggings</option>
+        <option value="/jeans/">Jeans</option>
+        <option value="/boots/">Boots</option>
+        <option value="/nightwear/">Nightwear</option>
+      </select>
+    </div>
 
     <div class="container">
       <div class="arrows-container">
@@ -26,151 +41,17 @@
           <i class="far fa-arrow-alt-circle-right"></i>
         </span>
       </div>
-      <div class="inner-container">
-        <div class="slider-item" id="last-clone">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.91</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.92------</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.93</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.94</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.94</p>
-          </div>
-        </div>
-        <div class="slider-item" id="first-clone">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.94</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.94</p>
-          </div>
-        </div>
-        <div class="slider-item">
-          <!--img and overlay-->
-          <div class="img-container">
-            <img
-              src="https://media2.newlookassets.com/i/newlook/619712403.jpg"
-              class="item-image"
-              alt="product-image"
-            />
-            <div class="overlay">
-              <i class="fas fa-info more-info"></i>
-            </div>
-          </div>
-          <!--name and price-->
-          <div class="detail-container">
-            <p class="item-title">Dark Grey Faux Fur Longline Coat</p>
-            <p class="item-price">£45.92------</p>
-          </div>
-        </div>
+      <div class="inner-container"></div>
+    </div>
+
+    <div class="modal-container hide">
+      <div class="modal-close">X</div>
+      <div class="modal-info">
+        <img class="modal-img" src="" alt="modal-img" />
+        <p class="modal-title"></p>
+        <span class="modal-link-container">
+          <a class="modal-link-tag" href="">View product</a>
+        </span>
       </div>
     </div>
 

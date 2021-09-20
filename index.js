@@ -1,3 +1,5 @@
+import { productDataWomens } from "./data.js";
+let ourProductData = productDataWomens;
 //innercontainer and items
 let innerCarousel = document.querySelector(".inner-container");
 let carouselItems = document.querySelectorAll(".inner-container .slider-item");
@@ -5,35 +7,185 @@ let carouselItems = document.querySelectorAll(".inner-container .slider-item");
 let prevBtn = document.querySelector("#prev");
 let nextBtn = document.querySelector("#next");
 //position index of image (at start) but changes
-let imgIndex = 1;
-let size = carouselItems[0].clientWidth;
+let imgIndex = 0;
+let maxItems;
+let size = 250;
+//inputs-search-min-max
+let searchBar = document.querySelector("#search");
+let minSearchPrice = document.querySelector("#min");
+let maxSearchPrice = document.querySelector("#max");
+let typeSearch = document.querySelector("#type-search");
+//initial Search params
+let searchVal = "";
+let minVal = 0;
+let maxVal = 500;
+let typeVal = "";
+//modal close-open
 
-innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`; //starting position
+let modalCloseBtn = document.querySelector(".modal-close");
+let modalContainer = document.querySelector(".modal-container");
+let modalImg = document.querySelector(".modal-img");
+let modalTitle = document.querySelector(".modal-title");
+let modalLink = document.querySelector(".modal-link-tag");
+
+renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
+
+//render Items function
+function renderItems(searchValue, minPrice, maxPrice, productType, data) {
+  data.forEach((ourProduct, index) => {
+    if (
+      (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
+        ourProduct.productTitle.toUpperCase().includes(searchValue)) &&
+      ourProduct.productTitle.includes(searchValue) &&
+      Number(ourProduct.price) >= minPrice &&
+      Number(ourProduct.price) <= maxPrice &&
+      ourProduct.productUrl.toLowerCase().includes(productType)
+    ) {
+      //create the elements
+      let productContainer = document.createElement("div");
+      productContainer.classList.add("slider-item");
+
+      productContainer.setAttribute("data-url-link", ourProduct.productUrl);
+      productContainer.setAttribute(
+        "data-img-url",
+        String(ourProduct.imageSrc)
+      );
+      productContainer.setAttribute("data-item-name", ourProduct.productTitle);
+
+      let productImgContainer = document.createElement("div");
+      productImgContainer.classList.add("img-container");
+      let productImg = document.createElement("img");
+      productImg.classList.add("item-image");
+      productImg.setAttribute("alt", "product-image");
+      let overlayContainer = document.createElement("div");
+      overlayContainer.classList.add("overlay");
+      let infoIcon = document.createElement("i");
+      infoIcon.classList.add("fas", "fa-info", "more-info");
+      let detailContainer = document.createElement("div");
+      detailContainer.classList.add("detail-container");
+      let itemTitle = document.createElement("p");
+      itemTitle.classList.add("item-title");
+      let itemPrice = document.createElement("p");
+      itemPrice.classList.add("item-price");
+
+      //appends
+      overlayContainer.append(infoIcon);
+      productImgContainer.append(productImg, overlayContainer);
+
+      detailContainer.append(itemTitle, itemPrice);
+
+      productContainer.append(productImgContainer, detailContainer);
+
+      //add-content
+      productImg.setAttribute("src", ourProduct.imageSrc);
+      itemTitle.textContent = ourProduct.productTitle;
+      itemPrice.textContent = ourProduct.price;
+
+      productContainer.addEventListener("click", (e) => {
+        let ourModalImg = ourProduct.imageSrc;
+        let ourModalTitle = ourProduct.productTitle;
+        let ourModaLink = ourProduct.productUrl;
+        modalContainer.classList.remove("hide");
+        modalImg.setAttribute("src", ourModalImg);
+        modalTitle.textContent = ourModalTitle;
+        modalLink.setAttribute("href", ourModaLink);
+        console.log("hello");
+      });
+
+      //append to carousel
+      innerCarousel.append(productContainer);
+      maxItems++;
+    } else {
+      return;
+    }
+  });
+}
 
 nextBtn.addEventListener("click", () => {
-  if (imgIndex >= carouselItems.length - 3) return; //stop and wait for transition to finish before starting another slide round
+  if (imgIndex >= maxItems - 1) return;
   innerCarousel.style.transition = "transform 0.8s ease";
   imgIndex++;
   innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
 });
 
 prevBtn.addEventListener("click", () => {
-  if (imgIndex <= 0) return; //stop and wait for transition to finish before starting another slide round
+  if (imgIndex <= 0) return;
   innerCarousel.style.transition = "transform 0.8s ease";
   imgIndex--;
   innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
 });
 
-//check if last or first item and start another round or of same carousel items
-innerCarousel.addEventListener("transitionend", () => {
-  if (carouselItems[imgIndex].id === "last-clone") {
-    innerCarousel.style.transition = "none";
-    imgIndex = carouselItems.length - 3;
-    innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
+searchBar.addEventListener("input", (e) => {
+  if (e.target.value.length === 0) {
+    removeAllChildNodes(innerCarousel);
+    renderItems("", minVal, maxVal, typeVal, ourProductData);
+    searchVal = e.target.value;
+    return;
   }
-  if (carouselItems[imgIndex].id === "first-clone") {
-    innerCarousel.style.transition = "none";
-    imgIndex = carouselItems.length - imgIndex;
-    innerCarousel.style.transform = `translateX(${+(-size * imgIndex)}px)`;
-  }
+  removeAllChildNodes(innerCarousel);
+  maxItems = 0;
+  imgIndex = 0;
+
+  renderItems(e.target.value, minVal, maxVal, "", ourProductData);
+  searchVal = e.target.value;
+  innerCarousel.style.transform = `translateX(${0}px)`;
 });
+
+minSearchPrice.addEventListener("input", (e) => {
+  if (e.target.value.length === 0) {
+    minVal = 0;
+    maxVal = maxVal;
+    removeAllChildNodes(innerCarousel);
+    renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
+    return;
+  }
+  removeAllChildNodes(innerCarousel);
+  maxItems = 0;
+  imgIndex = 0;
+  minVal = Number(e.target.value);
+  renderItems(searchVal, Number(e.target.value), maxVal, "", ourProductData);
+
+  innerCarousel.style.transform = `translateX(${0}px)`;
+});
+
+maxSearchPrice.addEventListener("input", (e) => {
+  if (e.target.value.length === 0) {
+    maxVal = 500;
+    minVal = minVal;
+    removeAllChildNodes(innerCarousel);
+    renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
+    return;
+  }
+  removeAllChildNodes(innerCarousel);
+  maxItems = 0;
+  imgIndex = 0;
+  maxVal = Number(e.target.value);
+  renderItems(searchVal, minVal, Number(e.target.value), "", ourProductData);
+
+  innerCarousel.style.transform = `translateX(${0}px)`;
+});
+typeSearch.addEventListener("input", (e) => {
+  if (e.target.value.length === 1) {
+    removeAllChildNodes(innerCarousel);
+    renderItems(searchVal, minVal, maxVal, "", ourProductData);
+    typeVal = e.target.value;
+    return;
+  }
+
+  removeAllChildNodes(innerCarousel);
+  maxItems = 0;
+  imgIndex = 0;
+  renderItems(searchVal, minVal, maxVal, e.target.value, ourProductData);
+  typeVal = e.target.value;
+  innerCarousel.style.transform = `translateX(${0}px)`;
+});
+
+modalCloseBtn.addEventListener("click", () => {
+  modalContainer.classList.add("hide");
+});
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
