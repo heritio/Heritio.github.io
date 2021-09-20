@@ -35,11 +35,11 @@ function renderItems(searchValue, minPrice, maxPrice, productType, data) {
   maxItems = 0;
   data.forEach((ourProduct, index) => {
     if (
+      ourProduct.productUrl.toLowerCase().includes(productType) &&
       (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
         ourProduct.productTitle.toUpperCase().includes(searchValue)) &&
       Number(ourProduct.price) >= minPrice &&
-      Number(ourProduct.price) <= maxPrice &&
-      ourProduct.productUrl.toLowerCase().includes(productType)
+      Number(ourProduct.price) <= maxPrice
     ) {
       //create the elements
       let productContainer = document.createElement("div");
@@ -95,6 +95,8 @@ function renderItems(searchValue, minPrice, maxPrice, productType, data) {
       //append to carousel
       innerCarousel.append(productContainer);
       maxItems++;
+    } else {
+      return;
     }
   });
 }
@@ -169,7 +171,7 @@ maxSearchPrice.addEventListener("input", (e) => {
   imgIndex = 0;
 });
 typeSearch.addEventListener("input", (e) => {
-  if (e.target.value.length === 1) {
+  if (e.target.value.length === "/") {
     removeAllChildNodes(innerCarousel);
     renderItems(searchVal, minVal, maxVal, "", ourProductData);
     typeVal = "/";
