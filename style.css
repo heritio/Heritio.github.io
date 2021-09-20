@@ -214,3 +214,16 @@ a {
 .hide {
   display: none;
 }
+.filter-btn {
+  cursor: pointer;
+  width: 150px;
+  height: 30px;
+  border: none;
+  background-color: aquamarine;
+  font-size: 30px;
+  font-weight: bolder;
+}
+.filter-btn:hover {
+  background-color: rgb(31, 77, 77);
+  color: white;
+}

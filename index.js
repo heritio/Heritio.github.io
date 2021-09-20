@@ -19,7 +19,7 @@ let typeSearch = document.querySelector("#type-search");
 let searchVal = "";
 let minVal = 0;
 let maxVal = 500;
-let typeVal = "";
+let typeVal = "/";
 //modal close-open
 
 let modalCloseBtn = document.querySelector(".modal-close");
@@ -34,12 +34,11 @@ renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
 function renderItems(searchValue, minPrice, maxPrice, productType, data) {
   data.forEach((ourProduct, index) => {
     if (
-      (ourProduct.productTitle.includes(searchValue) &&
-        Number(ourProduct.price) >= minPrice &&
-        Number(ourProduct.price) <= maxPrice &&
-        ourProduct.productUrl.toLowerCase().includes(productType)) ||
-      ourProduct.productTitle.toLowerCase().includes(searchValue) ||
-      ourProduct.productTitle.toUpperCase().includes(searchValue)
+      (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
+        ourProduct.productTitle.toUpperCase().includes(searchValue)) &&
+      Number(ourProduct.price) >= minPrice &&
+      Number(ourProduct.price) <= maxPrice &&
+      ourProduct.productUrl.toLowerCase().includes(productType)
     ) {
       //create the elements
       let productContainer = document.createElement("div");
@@ -119,41 +118,39 @@ searchBar.addEventListener("input", (e) => {
   if (e.target.value.length === 0) {
     removeAllChildNodes(innerCarousel);
     renderItems("", minVal, maxVal, typeVal, ourProductData);
-    searchVal = e.target.value;
+    searchVal = "";
     return;
   }
   removeAllChildNodes(innerCarousel);
+  renderItems(e.target.value, minVal, maxVal, "", ourProductData);
   maxItems = 0;
   imgIndex = 0;
 
-  renderItems(e.target.value, minVal, maxVal, "", ourProductData);
   searchVal = e.target.value;
   innerCarousel.style.transform = `translateX(${0}px)`;
 });
 
 minSearchPrice.addEventListener("input", (e) => {
   if (e.target.value.length === 0) {
-    minVal = 0;
-    maxVal = maxVal;
     removeAllChildNodes(innerCarousel);
-    renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
+    renderItems(searchVal, 0, maxVal, typeVal, ourProductData);
+    minVal = 0;
     return;
   }
   removeAllChildNodes(innerCarousel);
+  renderItems(searchVal, Number(e.target.value), maxVal, "", ourProductData);
   maxItems = 0;
   imgIndex = 0;
   minVal = Number(e.target.value);
-  renderItems(searchVal, Number(e.target.value), maxVal, "", ourProductData);
 
   innerCarousel.style.transform = `translateX(${0}px)`;
 });
 
 maxSearchPrice.addEventListener("input", (e) => {
   if (e.target.value.length === 0) {
-    maxVal = 500;
-    minVal = minVal;
     removeAllChildNodes(innerCarousel);
-    renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
+    renderItems(searchVal, minVal, 500, typeVal, ourProductData);
+    maxVal = 500;
     return;
   }
   removeAllChildNodes(innerCarousel);
@@ -168,14 +165,14 @@ typeSearch.addEventListener("input", (e) => {
   if (e.target.value.length === 1) {
     removeAllChildNodes(innerCarousel);
     renderItems(searchVal, minVal, maxVal, "", ourProductData);
-    typeVal = e.target.value;
+    typeVal = "/";
     return;
   }
 
   removeAllChildNodes(innerCarousel);
+  renderItems(searchVal, minVal, maxVal, e.target.value, ourProductData);
   maxItems = 0;
   imgIndex = 0;
-  renderItems(searchVal, minVal, maxVal, e.target.value, ourProductData);
   typeVal = e.target.value;
   innerCarousel.style.transform = `translateX(${0}px)`;
 });
