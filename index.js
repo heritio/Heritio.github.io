@@ -34,12 +34,12 @@ renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
 function renderItems(searchValue, minPrice, maxPrice, productType, data) {
   data.forEach((ourProduct, index) => {
     if (
-      (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
-        ourProduct.productTitle.toUpperCase().includes(searchValue)) &&
-      ourProduct.productTitle.includes(searchValue) &&
-      Number(ourProduct.price) >= minPrice &&
-      Number(ourProduct.price) <= maxPrice &&
-      ourProduct.productUrl.toLowerCase().includes(productType)
+      (ourProduct.productTitle.includes(searchValue) &&
+        Number(ourProduct.price) >= minPrice &&
+        Number(ourProduct.price) <= maxPrice &&
+        ourProduct.productUrl.toLowerCase().includes(productType)) ||
+      ourProduct.productTitle.toLowerCase().includes(searchValue) ||
+      ourProduct.productTitle.toUpperCase().includes(searchValue)
     ) {
       //create the elements
       let productContainer = document.createElement("div");
