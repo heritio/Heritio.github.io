@@ -32,72 +32,68 @@ renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
 
 //render Items function
 function renderItems(searchValue, minPrice, maxPrice, productType, data) {
-  maxItems = 0;
-  data.forEach((ourProduct, index) => {
-    if (
+  let dataToBeUsed = data.filter((ourProduct) => {
+    return (
       ourProduct.productUrl.toLowerCase().includes(productType) &&
       (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
         ourProduct.productTitle.toUpperCase().includes(searchValue)) &&
       Number(ourProduct.price) >= minPrice &&
       Number(ourProduct.price) <= maxPrice
-    ) {
-      //create the elements
-      let productContainer = document.createElement("div");
-      productContainer.classList.add("slider-item");
+    );
+  });
+  maxItems = 0;
+  dataToBeUsed.forEach((ourProduct, index) => {
+    //create the elements
+    let productContainer = document.createElement("div");
+    productContainer.classList.add("slider-item");
 
-      productContainer.setAttribute("data-url-link", ourProduct.productUrl);
-      productContainer.setAttribute(
-        "data-img-url",
-        String(ourProduct.imageSrc)
-      );
-      productContainer.setAttribute("data-item-name", ourProduct.productTitle);
+    productContainer.setAttribute("data-url-link", ourProduct.productUrl);
+    productContainer.setAttribute("data-img-url", String(ourProduct.imageSrc));
+    productContainer.setAttribute("data-item-name", ourProduct.productTitle);
 
-      let productImgContainer = document.createElement("div");
-      productImgContainer.classList.add("img-container");
-      let productImg = document.createElement("img");
-      productImg.classList.add("item-image");
-      productImg.setAttribute("alt", "product-image");
-      let overlayContainer = document.createElement("div");
-      overlayContainer.classList.add("overlay");
-      let infoIcon = document.createElement("i");
-      infoIcon.classList.add("fas", "fa-info", "more-info");
-      let detailContainer = document.createElement("div");
-      detailContainer.classList.add("detail-container");
-      let itemTitle = document.createElement("p");
-      itemTitle.classList.add("item-title");
-      let itemPrice = document.createElement("p");
-      itemPrice.classList.add("item-price");
+    let productImgContainer = document.createElement("div");
+    productImgContainer.classList.add("img-container");
+    let productImg = document.createElement("img");
+    productImg.classList.add("item-image");
+    productImg.setAttribute("alt", "product-image");
+    let overlayContainer = document.createElement("div");
+    overlayContainer.classList.add("overlay");
+    let infoIcon = document.createElement("i");
+    infoIcon.classList.add("fas", "fa-info", "more-info");
+    let detailContainer = document.createElement("div");
+    detailContainer.classList.add("detail-container");
+    let itemTitle = document.createElement("p");
+    itemTitle.classList.add("item-title");
+    let itemPrice = document.createElement("p");
+    itemPrice.classList.add("item-price");
 
-      //appends
-      overlayContainer.append(infoIcon);
-      productImgContainer.append(productImg, overlayContainer);
+    //appends
+    overlayContainer.append(infoIcon);
+    productImgContainer.append(productImg, overlayContainer);
 
-      detailContainer.append(itemTitle, itemPrice);
+    detailContainer.append(itemTitle, itemPrice);
 
-      productContainer.append(productImgContainer, detailContainer);
+    productContainer.append(productImgContainer, detailContainer);
 
-      //add-content
-      productImg.setAttribute("src", ourProduct.imageSrc);
-      itemTitle.textContent = ourProduct.productTitle;
-      itemPrice.textContent = ourProduct.price;
+    //add-content
+    productImg.setAttribute("src", ourProduct.imageSrc);
+    itemTitle.textContent = ourProduct.productTitle;
+    itemPrice.textContent = ourProduct.price;
 
-      productContainer.addEventListener("click", (e) => {
-        let ourModalImg = ourProduct.imageSrc;
-        let ourModalTitle = ourProduct.productTitle;
-        let ourModaLink = ourProduct.productUrl;
-        modalContainer.classList.remove("hide");
-        modalImg.setAttribute("src", ourModalImg);
-        modalTitle.textContent = ourModalTitle;
-        modalLink.setAttribute("href", ourModaLink);
-        console.log("hello");
-      });
+    productContainer.addEventListener("click", (e) => {
+      let ourModalImg = ourProduct.imageSrc;
+      let ourModalTitle = ourProduct.productTitle;
+      let ourModaLink = ourProduct.productUrl;
+      modalContainer.classList.remove("hide");
+      modalImg.setAttribute("src", ourModalImg);
+      modalTitle.textContent = ourModalTitle;
+      modalLink.setAttribute("href", ourModaLink);
+      console.log("hello");
+    });
 
-      //append to carousel
-      innerCarousel.append(productContainer);
-      maxItems++;
-    } else {
-      return;
-    }
+    //append to carousel
+    innerCarousel.append(productContainer);
+    maxItems++;
   });
 }
 
