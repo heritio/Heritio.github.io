@@ -32,6 +32,7 @@ renderItems(searchVal, minVal, maxVal, typeVal, ourProductData);
 
 //render Items function
 function renderItems(searchValue, minPrice, maxPrice, productType, data) {
+  maxItems = 0;
   data.forEach((ourProduct, index) => {
     if (
       (ourProduct.productTitle.toLowerCase().includes(searchValue) ||
@@ -94,8 +95,6 @@ function renderItems(searchValue, minPrice, maxPrice, productType, data) {
       //append to carousel
       innerCarousel.append(productContainer);
       maxItems++;
-    } else {
-      return;
     }
   });
 }
@@ -119,15 +118,17 @@ searchBar.addEventListener("input", (e) => {
     removeAllChildNodes(innerCarousel);
     renderItems("", minVal, maxVal, typeVal, ourProductData);
     searchVal = "";
+
+    imgIndex = 0;
     return;
   }
   removeAllChildNodes(innerCarousel);
   renderItems(e.target.value, minVal, maxVal, "", ourProductData);
-  maxItems = 0;
-  imgIndex = 0;
 
   searchVal = e.target.value;
   innerCarousel.style.transform = `translateX(${0}px)`;
+
+  imgIndex = 0;
 });
 
 minSearchPrice.addEventListener("input", (e) => {
@@ -135,15 +136,18 @@ minSearchPrice.addEventListener("input", (e) => {
     removeAllChildNodes(innerCarousel);
     renderItems(searchVal, 0, maxVal, typeVal, ourProductData);
     minVal = 0;
+
+    imgIndex = 0;
     return;
   }
   removeAllChildNodes(innerCarousel);
   renderItems(searchVal, Number(e.target.value), maxVal, "", ourProductData);
-  maxItems = 0;
-  imgIndex = 0;
+
   minVal = Number(e.target.value);
 
   innerCarousel.style.transform = `translateX(${0}px)`;
+
+  imgIndex = 0;
 });
 
 maxSearchPrice.addEventListener("input", (e) => {
@@ -151,30 +155,36 @@ maxSearchPrice.addEventListener("input", (e) => {
     removeAllChildNodes(innerCarousel);
     renderItems(searchVal, minVal, 500, typeVal, ourProductData);
     maxVal = 500;
+
+    imgIndex = 0;
     return;
   }
   removeAllChildNodes(innerCarousel);
-  maxItems = 0;
-  imgIndex = 0;
+
   maxVal = Number(e.target.value);
   renderItems(searchVal, minVal, Number(e.target.value), "", ourProductData);
 
   innerCarousel.style.transform = `translateX(${0}px)`;
+
+  imgIndex = 0;
 });
 typeSearch.addEventListener("input", (e) => {
   if (e.target.value.length === 1) {
     removeAllChildNodes(innerCarousel);
     renderItems(searchVal, minVal, maxVal, "", ourProductData);
     typeVal = "/";
+
+    imgIndex = 0;
     return;
   }
 
   removeAllChildNodes(innerCarousel);
   renderItems(searchVal, minVal, maxVal, e.target.value, ourProductData);
-  maxItems = 0;
-  imgIndex = 0;
+
   typeVal = e.target.value;
   innerCarousel.style.transform = `translateX(${0}px)`;
+
+  imgIndex = 0;
 });
 
 modalCloseBtn.addEventListener("click", () => {
